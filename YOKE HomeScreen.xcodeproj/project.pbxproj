@@ -15,6 +15,7 @@
 		49F7112024D1EB5800D148D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49F7111E24D1EB5800D148D5 /* LaunchScreen.storyboard */; };
 		49F7112B24D1EB5900D148D5 /* YOKE_HomeScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F7112A24D1EB5900D148D5 /* YOKE_HomeScreenTests.swift */; };
 		49F7113624D1EB5900D148D5 /* YOKE_HomeScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F7113524D1EB5900D148D5 /* YOKE_HomeScreenUITests.swift */; };
+		49F7114524D2166200D148D5 /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F7114324D2132800D148D5 /* HomeAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		49F7113124D1EB5900D148D5 /* YOKE HomeScreenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "YOKE HomeScreenUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F7113524D1EB5900D148D5 /* YOKE_HomeScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOKE_HomeScreenUITests.swift; sourceTree = "<group>"; };
 		49F7113724D1EB5900D148D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49F7114324D2132800D148D5 /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				49F7111324D1EB5500D148D5 /* AppDelegate.swift */,
 				49F7111524D1EB5500D148D5 /* SceneDelegate.swift */,
+				49F7114324D2132800D148D5 /* HomeAPI.swift */,
 				49F7111724D1EB5500D148D5 /* ContentView.swift */,
 				49F7111924D1EB5800D148D5 /* Assets.xcassets */,
 				49F7111E24D1EB5800D148D5 /* LaunchScreen.storyboard */,
@@ -270,6 +273,7 @@
 				49F7111424D1EB5500D148D5 /* AppDelegate.swift in Sources */,
 				49F7111624D1EB5500D148D5 /* SceneDelegate.swift in Sources */,
 				49F7111824D1EB5500D148D5 /* ContentView.swift in Sources */,
+				49F7114524D2166200D148D5 /* HomeAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

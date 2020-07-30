@@ -23,11 +23,13 @@ public struct homeResponse: Codable {
 public struct Star: Codable {
     let name, bio: String
     let isOnline: Bool
+    var isFollowing: Bool?
     
     init() {
         self.name = ""
         self.bio = ""
         self.isOnline = false
+        self.isFollowing = false
     }
     init(name: String){
         self.name = name
@@ -80,6 +82,7 @@ class homeData: ObservableObject {
                     if self.data.onlineStars!.count > 1 {
                         self.data.onlineStars?.remove(at: 0)
                     }
+                    print(self.data)
                 }
             }
         }

@@ -29,10 +29,10 @@ struct Home: View {
         VStack(spacing: 0) {
             // Header bar
             appBar()
-            Spacer()
+            
             // Check Index Select Correct Screen
             containedView()
-            Spacer()
+            
             // Footer bar, with nav
             appFooter(index: self.$indx)
             
@@ -56,26 +56,33 @@ struct Home: View {
 
 struct discover: View{
     var body: some View{
-        Text("Discover")
+        ScrollView{
+            Text("Discover")
+        }
     }
 }
 
 struct challenges: View{
     var body: some View{
-        Text("Challenges")
+        ScrollView{
+            Text("Challenges")
+        }
     }
 }
 
 struct profile: View{
     var body: some View{
-        Text("Profile")
+        ScrollView{
+            Text("Profile")
+        }
     }
 }
 
 struct starView : View {
     // Display a Stars Card
-    var star: Star
+    @State var star: Star
     @State var showingDetail = false
+    var buttonSize = CGFloat(20)
     
     var body: some View{
         Button(action: {
@@ -95,42 +102,69 @@ struct starView : View {
                     
                     Spacer()
                     
-                    Text("Follow..")
-                        .foregroundColor(.white)
-                        .frame(alignment: .topLeading)
-                }
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 25, style: .continuous)
+                            .fill(Color.yellow)
+                            .frame(width: 140, height: 40)
+                        
+                        Text( self.star.isFollowing ?? false ? "Following" : "Follow" )
+                            .foregroundColor(.white)
+                            .frame(alignment: .topLeading)
+                    }.padding(10)
+                }.padding(5)
             }
+            
         }.sheet(isPresented: $showingDetail) {
-            ZStack{
-                
+            ZStack(){
                 Image("defaultPerson")
                     .resizable()
-                    .frame(width: 340, height: 735)
-                    .cornerRadius(15)
+                    .edgesIgnoringSafeArea(.bottom)
                 
                 VStack{
-                    HStack {
+                    HStack() {
                         Button(action : {
                             self.showingDetail = false
                         }) {
                             Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width: self.buttonSize, height: self.buttonSize, alignment: .leading)
+                                .foregroundColor(.white)
                         }
-                        .frame(alignment: .topLeading)
+                        Spacer()
                         
                         Text(self.star.name)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .frame(alignment: .center)
-                    }
+                            .padding(.leading, -self.buttonSize)
+                        
+                        Spacer()
+                        
+                        Button(action : {
+                            self.star.isFollowing = !(self.star.isFollowing ?? false)
+                        }) {
+                            Image(systemName: self.star.isFollowing ?? false ? "star.fill" : "star")
+                                .resizable()
+                                .frame(width: self.buttonSize, height: self.buttonSize, alignment: .leading)
+                                .foregroundColor(.white)
+                        }
+                    }.padding(20)
                     
                     Spacer()
                     
                     Button( action: {
-                        // Follow Function?
+                        self.star.isFollowing = !(self.star.isFollowing ?? false)
                     }) {
-                        Text("Follow Button")
-                            .foregroundColor(.black)
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                .fill(Color.yellow)
+                                .frame(width: 140, height: 40)
+                            
+                            Text(self.star.isFollowing ?? false ? "Following" : "Follow" )
+                                .foregroundColor(.white)
+                                .frame(alignment: .topLeading)
+                        }.padding(10)
                     }
-                }
+                }.padding(5)
             }
         }
         .buttonStyle(PlainButtonStyle())
@@ -142,10 +176,9 @@ struct appBody: View {
     
     var body: some View{
         ScrollView {
-            VStack{
+            VStack(alignment: .leading){
                 Text("Live Now")
                     .font(.system(size: 25, weight: .heavy, design: .serif))
-                    .frame(alignment: .leading)
                 
                 ScrollView(.horizontal){
                     HStack{
@@ -154,11 +187,10 @@ struct appBody: View {
                         }
                     }
                 }
-                Spacer()
                 
+                Spacer()
                 Text("Featured")
                     .font(.system(size: 25, weight: .heavy, design: .serif))
-                    .frame(alignment: .leading)
                 ScrollView(.horizontal){
                     HStack{
                         ForEach(stars.data.stars, id: \.name) { star in
@@ -167,6 +199,7 @@ struct appBody: View {
                     }
                 }
             }
+            .padding(10)
         }
     }
 }
@@ -196,7 +229,6 @@ struct appFooter: View {
                 }
                 
                 Spacer()
-                
                 Button( action: {
                     self.index = 1
                 }) {
@@ -253,14 +285,12 @@ struct appFooter: View {
 }
 
 struct appBar: View {
-    
     var body: some View {
-        
-        VStack(spacing:25){
+        VStack(spacing:20){
             HStack{
                 Image("Logo")
                     .resizable()
-                    .frame(width: 110, height: 40)
+                    .frame(width: 126, height: 37)
                 
                 Spacer(minLength: 0)
                 

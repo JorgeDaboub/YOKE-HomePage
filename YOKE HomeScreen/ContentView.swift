@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import CoreHaptics
+
 
 struct ContentView: View {
     var body: some View {
@@ -83,10 +85,47 @@ struct starView : View {
     @State var star: Star
     @State var showingDetail = false
     var buttonSize = CGFloat(20)
+    @State private var engine: CHHapticEngine?
+    
+    func prepareHaptics() {
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
+
+        do {
+            self.engine = try CHHapticEngine()
+            try engine?.start()
+        } catch {
+            print("There was an error creating the engine: \(error.localizedDescription)")
+        }
+    }
+    
+    func oneTapHap() {
+        /* Funct From: https:www.hackingwithswift.com/books/ios-swiftui/making-vibrations-with-uinotificationfeedbackgenerator-and-core-haptics
+        */
+        
+        // Make sure that the device supports haptics
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
+        var events = [CHHapticEvent]()
+
+        // Create one intense, sharp tap
+        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
+        let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0)
+        events.append(event)
+
+        // Convert those events into a pattern and play it immediately
+        do {
+            let pattern = try CHHapticPattern(events: events, parameters: [])
+            let player = try engine?.makePlayer(with: pattern)
+            try player?.start(atTime: 0)
+        } catch {
+            print("Failed to play pattern: \(error.localizedDescription).")
+        }
+    }
     
     var body: some View{
         Button(action: {
             self.showingDetail.toggle()
+            self.oneTapHap()
         }) {
             ZStack{
                 
@@ -113,8 +152,8 @@ struct starView : View {
                     }.padding(10)
                 }.padding(5)
             }
-            
-        }.sheet(isPresented: $showingDetail) {
+        }.onAppear(perform: prepareHaptics)
+        .sheet(isPresented: $showingDetail) {
             ZStack(){
                 Image("defaultPerson")
                     .resizable()
@@ -173,6 +212,7 @@ struct starView : View {
 
 struct appBody: View {
     @ObservedObject var stars = homeData()
+    
     
     var body: some View{
         ScrollView {
@@ -294,7 +334,7 @@ struct appBar: View {
                 
                 Spacer(minLength: 0)
                 
-                Image(systemName: "bitcoinsign.circle")
+                Image("coin")
                     .resizable()
                     .frame(width:18, height: 18)
                     .foregroundColor(.white)

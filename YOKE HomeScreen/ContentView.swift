@@ -162,6 +162,7 @@ struct starView : View {
                 VStack{
                     HStack() {
                         Button(action : {
+                            self.oneTapHap()
                             self.showingDetail = false
                         }) {
                             Image(systemName: "xmark")
@@ -179,6 +180,7 @@ struct starView : View {
                         Spacer()
                         
                         Button(action : {
+                            self.oneTapHap()
                             self.star.isFollowing = !(self.star.isFollowing ?? false)
                         }) {
                             Image(systemName: self.star.isFollowing ?? false ? "star.fill" : "star")
@@ -191,6 +193,7 @@ struct starView : View {
                     Spacer()
                     
                     Button( action: {
+                        self.oneTapHap()
                         self.star.isFollowing = !(self.star.isFollowing ?? false)
                     }) {
                         ZStack{
@@ -331,6 +334,7 @@ struct appBar: View {
                 Image("Logo")
                     .resizable()
                     .frame(width: 126, height: 37)
+                    .padding(5)
                 
                 Spacer(minLength: 0)
                 
